@@ -9,7 +9,7 @@ class MySecurity extends SecurityManager{
 		super();
 	}
 	public void checkWrite(String file){
-		if(file!=Main.RES_FILE && Main.pass.equals("Some random password")){
+		if(file!=Main.RES_FILE || !Main.pass.equals("Some random password")){
 			throw new SecurityException("Aha trying to mess. With my file system?? You fail Muhahaha.");
 		}
 	}
