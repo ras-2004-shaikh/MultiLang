@@ -21,7 +21,7 @@ public class Main{
 
 	public static void main(String[] args)throws Exception
 	{
-		Scanner sc=new Scanner(new File("tests.json"));
+		Scanner sc=new Scanner(new File(args[0]));
 		String s=sc.nextLine();
 		JSONParser parser=new JSONParser();
 		Object obj=parser.parse(s);
@@ -32,7 +32,7 @@ public class Main{
 		for(Object tst:tests){
 			JSONArray test=(JSONArray)tst;
 			List<Object> objs=new ArrayList<Object>();
-			for(Object arg:test.subList(0,test.size()-1)){
+			for(Object arg:(JSONArray)test.get(0)){
 				objs.add(arg);
 			}
 			Class main=Class.forName("Main");
@@ -54,7 +54,7 @@ public class Main{
 				failed.add("Error: "+e.toString());
 				failed_cases.add(failed);
 			}
-			if(ans!=null && !ans.toString().equals(test.get(test.size()-1).toString())){
+			if(ans!=null && !ans.toString().equals(test.get(1).toString())){
 				List<Object> failed=new ArrayList<Object>();
 				for(Object t:test)failed.add(t);
 				failed.add("Your Answer: "+ans.toString());
@@ -63,12 +63,13 @@ public class Main{
 		}
 		pass="Some random password";
 		PrintStream ps=new PrintStream(RES_FILE);
+		ps.println("Passed: "+(tests.size()-failed_cases.size())+"/"+tests.size());
 		for(List<Object> test:failed_cases){
-			ps.println("Test: ");
-			ps.println(test.subList(0,test.size()-1).toString());
-			ps.println("Actual answer: ");
-			ps.println(test.get(test.size()-2).toString());
-			ps.println(test.get(test.size()-1).toString());
+			ps.print("Test: ");
+			ps.println(test.get(0).toString());
+			ps.print("Actual answer: ");
+			ps.println(test.get(1).toString());
+			ps.println(test.get(2).toString());
 		}
 		pass="not the random password";
 	}

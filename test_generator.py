@@ -23,7 +23,7 @@ def test_generator():
 	pass
 	#remove the pass and create a generator to yield the test cases. For example:
 	for _ in range(test_count):
-		test=[5,]
+		test=[(),5]
 		yield test
 
 cases = [*test_generator()]  
